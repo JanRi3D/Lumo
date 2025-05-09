@@ -3,6 +3,7 @@ import "./App.css";
 import Library from "./components/Library";
 import Settings from "./components/Settings";
 import Overview from "./components/Overview";
+import Download from "./components/Download";
 import { Window } from '@tauri-apps/api/window';
 
 function App() {
@@ -36,6 +37,8 @@ function App() {
         return <Settings />;
       case "Overview":
         return <Overview />;
+      case "Downloads":
+        return <Download />;
       case "Screenshots":
       default:
         return <div className="placeholder-content">Content for {activeTab} will be implemented soon.</div>;
@@ -52,7 +55,11 @@ function App() {
           <button className={activeTab === "Library" ? "active" : ""} onClick={() => setActiveTab("Library")}>Library</button>
           <button className={activeTab === "Screenshots" ? "active" : ""} onClick={() => setActiveTab("Screenshots")}>Screenshots</button>
         </div>        <div className="navbar-actions">
-          <button title="Download" className="icon-button">
+          <button 
+            title="Download" 
+            className={`icon-button ${activeTab === "Downloads" ? "active" : ""}`}
+            onClick={() => setActiveTab("Downloads")}
+          >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 16L12 4M12 16L8 12M12 16L16 12M4 20H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
@@ -69,7 +76,8 @@ function App() {
           </button>
           <button title="Refresh" className="icon-button">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 3V8M21 8H16M21 8L18 5.29168C16.4077 3.86656 14.3051 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.2832 21 19.8675 18.008 20.777 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M23 4V10H17M1 20V14H7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M3.51 9C4.01717 7.56678 4.87913 6.2854 6.01547 5.27499C7.1518 4.26457 8.52547 3.55735 10.0083 3.21489C11.4911 2.87243 13.0348 2.90543 14.5012 3.31147C15.9676 3.7175 17.3145 4.48564 18.418 5.544L23 10M1 14L5.582 18.456C6.68549 19.5144 8.03241 20.2825 9.49881 20.6885C10.9652 21.0946 12.5089 21.1276 13.9917 20.7851C15.4745 20.4426 16.8482 19.7354 17.9845 18.725C19.1209 17.7146 19.9828 16.4332 20.49 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
           <button title="Settings" className="icon-button" onClick={() => setActiveTab("Settings")}>
