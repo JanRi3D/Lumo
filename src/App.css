@@ -139,6 +139,20 @@ body {
 
 .icon-button:hover {
   opacity: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.window-controls {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 8px;
+}
+
+.close-button:hover {
+  background-color: #e81123 !important;
+  opacity: 1;
 }
 
 .window-control {
