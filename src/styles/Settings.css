@@ -10,7 +10,7 @@
 /* Sidebar */
 .settings-sidebar {
   width: 240px;
-  background-color: #222;
+  background-color: #1e1e1e;
   border-right: 1px solid #333;
   padding: 16px 0;
 }
@@ -21,6 +21,7 @@
   font-size: 18px;
   font-weight: 500;
   border-bottom: 1px solid #333;
+  color: #fff;
 }
 
 .settings-menu {
@@ -34,21 +35,32 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  color: #fff;
+  opacity: 0.7;
 }
 
 .settings-menu .menu-item:hover {
-  background-color: #2a2a2a;
+  background-color: rgba(255, 255, 255, 0.1);
+  opacity: 0.9;
 }
 
 .settings-menu .menu-item.active {
-  background-color: #2e2e2e;
+  background-color: rgba(255, 255, 255, 0.1);
+  opacity: 1;
+  font-weight: 500;
   border-left: 3px solid #4a90e2;
 }
 
-.settings-menu .icon {
+.settings-menu .menu-item svg {
   margin-right: 12px;
-  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+.settings-menu .menu-item span {
+  font-size: 14px;
 }
 
 /* Main content area */
@@ -66,6 +78,7 @@
   margin: 0 0 8px 0;
   font-size: 24px;
   font-weight: 500;
+  color: #fff;
 }
 
 .settings-header p {
@@ -91,21 +104,26 @@
 .notification.success {
   background-color: rgba(50, 160, 100, 0.15);
   border: 1px solid rgba(50, 160, 100, 0.3);
+  color: #32a064;
 }
 
 .notification.info {
   background-color: rgba(74, 144, 226, 0.15);
   border: 1px solid rgba(74, 144, 226, 0.3);
+  color: #4a90e2;
 }
 
 .notification.error {
   background-color: rgba(220, 60, 60, 0.15);
   border: 1px solid rgba(220, 60, 60, 0.3);
+  color: #dc3c3c;
 }
 
-.notification-icon {
+.notification svg {
   margin-right: 12px;
-  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: currentColor;
 }
 
 /* Form elements */
@@ -125,6 +143,7 @@
   margin-bottom: 8px;
   font-weight: 500;
   font-size: 14px;
+  color: #fff;
 }
 
 .form-group input[type="text"],
@@ -138,7 +157,7 @@
   border-radius: 6px;
   color: #fff;
   font-size: 14px;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .form-group input:focus,
@@ -146,6 +165,11 @@
 .form-group textarea:focus {
   border-color: #4a90e2;
   outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.form-group input::placeholder {
+  color: #666;
 }
 
 .field-help {
@@ -169,9 +193,10 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .primary-button {
@@ -194,8 +219,11 @@
   background-color: #333;
 }
 
-.test-icon {
-  margin-right: 8px;
+.primary-button svg,
+.secondary-button svg {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
 }
 
 /* Help section */
@@ -210,6 +238,7 @@
   margin-bottom: 16px;
   font-size: 16px;
   font-weight: 500;
+  color: #fff;
 }
 
 .help-section ol {
@@ -223,11 +252,30 @@
   color: #ccc;
 }
 
+/* Placeholder content */
 .placeholder-content {
-  padding: 20px;
   background-color: #232323;
   border-radius: 8px;
+  padding: 24px;
   color: #999;
-  font-style: italic;
-  margin-top: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Scrollbar styling */
+.settings-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.settings-content::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
