@@ -1,222 +1,224 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import '../styles/Library.css';
 
-interface Game {
-  id: string;
-  title: string;
-  coverImage: string;
-  installed?: boolean;
-  playTime?: string;
-  completionState?: string;
-}
+// Mock game data with local placeholder images
+const mockGames = [
+  { 
+    id: 1, 
+    title: "Lords Fallen", 
+    coverUrl: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1501750/8c2a09d991a95867499cd559684b56e1a7098875/header_alt_assets_3.jpg?t=1746780188",
+    playtime: "12h",
+    completion: "In Progress" 
+  },
+  { 
+    id: 2, 
+    title: "The Elder Scrolls IV: Oblivion Remastered", 
+    coverUrl: "https://i.imgur.com/txAYeDy.jpeg",
+    playtime: "85h",
+    completion: "Complete" 
+  },
+  { 
+    id: 3, 
+    title: "Mario Kart 8 Deluxe", 
+    coverUrl: "https://i.imgur.com/ZT5EKCT.jpeg",
+    playtime: "24h",
+    completion: "In Progress" 
+  },
+  { 
+    id: 4, 
+    title: "Super Mario Bros Wonder", 
+    coverUrl: "https://i.imgur.com/hTOPV5O.jpeg",
+    playtime: "8h",
+    completion: "Just Started" 
+  },
+  { 
+    id: 5, 
+    title: "Wizordum", 
+    coverUrl: "https://i.imgur.com/ZM4pB6V.jpeg",
+    playtime: "32h",
+    completion: "Complete" 
+  },
+  { 
+    id: 6, 
+    title: "Conquest Dark", 
+    coverUrl: "https://i.imgur.com/2IHmFCj.jpeg",
+    playtime: "5h",
+    completion: "Just Started" 
+  },
+  { 
+    id: 7, 
+    title: "Super Mario Odyssey", 
+    coverUrl: "https://i.imgur.com/OtBxNYF.jpeg",
+    playtime: "45h",
+    completion: "Complete" 
+  },
+  { 
+    id: 8, 
+    title: "Rise of the Ronin", 
+    coverUrl: "https://i.imgur.com/0TCZnWt.jpeg",
+    playtime: "18h",
+    completion: "In Progress" 
+  },
+  { 
+    id: 9, 
+    title: "Expedition", 
+    coverUrl: "https://i.imgur.com/YxJxcHf.jpeg",
+    playtime: "7h",
+    completion: "Just Started" 
+  },
+  { 
+    id: 10, 
+    title: "Hole", 
+    coverUrl: "https://i.imgur.com/z6e7CHr.jpeg",
+    playtime: "3h",
+    completion: "Just Started" 
+  },
+];
 
-const Library = () => {
+const Library: React.FC = () => {
+  const [games, setGames] = useState(mockGames);
   const [searchQuery, setSearchQuery] = useState('');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [games, setGames] = useState<Game[]>([
-    { 
-      id: '1', 
-      title: 'ELIM', 
-      coverImage: 'https://via.placeholder.com/300x400/222222/FFFFFF?text=ELIM' 
-    },
-    { 
-      id: '2', 
-      title: 'No Man\'s Sky', 
-      coverImage: 'https://via.placeholder.com/300x400/0c64a0/FFFFFF?text=No+Man%27s+Sky' 
-    },
-    { 
-      id: '3', 
-      title: 'RimWorld', 
-      coverImage: 'https://via.placeholder.com/300x400/333333/FFFFFF?text=RimWorld' 
-    },
-    { 
-      id: '4', 
-      title: 'Kingdom Come: Deliverance', 
-      coverImage: 'https://via.placeholder.com/300x400/654321/FFFFFF?text=Kingdom+Come:+Deliverance',
-      installed: true,
-      playTime: '43h 37m',
-      completionState: 'Not Set'
-    },
-    { 
-      id: '5', 
-      title: 'Ropuka\'s Idle Island', 
-      coverImage: 'https://via.placeholder.com/300x400/5fa049/FFFFFF?text=Ropuka%27s+Idle+Island' 
-    },
-    { 
-      id: '6', 
-      title: 'Noita', 
-      coverImage: 'https://via.placeholder.com/300x400/000000/FFD700?text=Noita' 
-    },
-    { 
-      id: '7', 
-      title: 'Shredders', 
-      coverImage: 'https://via.placeholder.com/300x400/FFFFFF/222222?text=Shredders' 
-    },
-    { 
-      id: '8', 
-      title: 'Zero Sievert', 
-      coverImage: 'https://via.placeholder.com/300x400/333333/FFFF00?text=Zero+Sievert' 
-    },
-    { 
-      id: '9', 
-      title: 'The Binding of Isaac', 
-      coverImage: 'https://via.placeholder.com/300x400/990000/FFFFFF?text=Isaac' 
-    },
-    { 
-      id: '10', 
-      title: 'Forza Horizon 4', 
-      coverImage: 'https://via.placeholder.com/300x400/0047AB/FFFFFF?text=Forza+Horizon+4' 
-    },
-    { 
-      id: '11', 
-      title: 'Vampire Survivors', 
-      coverImage: 'https://via.placeholder.com/300x400/8B0000/FFFFFF?text=Vampire+Survivors' 
-    },
-    { 
-      id: '12', 
-      title: 'Palworld', 
-      coverImage: 'https://via.placeholder.com/300x400/66CCFF/222222?text=Palworld' 
-    },
-    { 
-      id: '13', 
-      title: 'Rainbow Six Siege', 
-      coverImage: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=R6+Siege' 
-    },
-    { 
-      id: '14', 
-      title: 'Animal Crossing', 
-      coverImage: 'https://via.placeholder.com/300x400/88cc88/000000?text=Animal+Crossing' 
-    },
-    { 
-      id: '15', 
-      title: 'Dinkum', 
-      coverImage: 'https://via.placeholder.com/300x400/FFD700/663300?text=Dinkum' 
-    },
-    { 
-      id: '16', 
-      title: 'Hollow Knight', 
-      coverImage: 'https://via.placeholder.com/300x400/333333/FFFFFF?text=Hollow+Knight' 
-    },
-    { 
-      id: '17', 
-      title: 'Need For Speed', 
-      coverImage: 'https://via.placeholder.com/300x400/000000/FF0000?text=Need+For+Speed' 
-    },
-    { 
-      id: '18', 
-      title: 'Oblivion', 
-      coverImage: 'https://via.placeholder.com/300x400/FF4500/000000?text=Oblivion' 
-    }
-  ]);
-
+  const [viewMode, setViewMode] = useState('grid'); // grid or list
+  const [zoomLevel, setZoomLevel] = useState(50); // 0-100 scale
+  
+  // Filter games based on search query
   const filteredGames = games.filter(game => 
     game.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleClearSearch = () => {
-    setSearchQuery('');
-  };
-
-  const handleGameClick = (game: Game) => {
-    console.log('Game clicked:', game.title);
-  };
-
-  const handleInfoClick = (e: React.MouseEvent, game: Game) => {
-    e.stopPropagation();
-    console.log('Info clicked for:', game.title);
-  };
-
-  const handlePlayClick = (e: React.MouseEvent, game: Game) => {
-    e.stopPropagation();
-    console.log('Play clicked for:', game.title);
-  };
-
   return (
-    <div className="library-view">
+    <div className="library-container">
       <div className="library-header">
         <div className="search-container">
-          <span className="search-icon">🔍</span>
-          <input
-            type="text"
+          <svg 
+            className="search-icon" 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#777' }}
+          >
+            <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <input 
+            type="text" 
             className="search-input"
             placeholder="Search games..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          {searchQuery && (
-            <button className="clear-search" onClick={handleClearSearch}>
-              ×
-            </button>
-          )}
+          {searchQuery && <button className="clear-search" onClick={() => setSearchQuery('')}>Clear all</button>}
         </div>
-        <div className="library-controls">
-          <button className="clear-all-button">Clear all</button>
+        
+        <div className="view-controls">
           <div className="filters-button">
-            <span className="filter-icon">≡</span>
-            <span>Filters (1)</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 6H21M6 12H18M9 18H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            Filters
           </div>
-          <div className="view-toggle">
+          
+          <div className="view-modes">
             <button 
-              className={`grid-view-button ${viewMode === 'grid' ? 'active' : ''}`}
+              className={`view-mode-button ${viewMode === 'grid' ? 'active' : ''}`}
               onClick={() => setViewMode('grid')}
+              title="Grid View"
             >
-              <span className="grid-icon">▦</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+                <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+                <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+                <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+              </svg>
             </button>
             <button 
-              className={`list-view-button ${viewMode === 'list' ? 'active' : ''}`}
+              className={`view-mode-button ${viewMode === 'list' ? 'active' : ''}`}
               onClick={() => setViewMode('list')}
+              title="List View"
             >
-              <span className="list-icon">≡</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
             </button>
           </div>
-          <div className="sort-options">
-            <button className="sort-button">↕</button>
+          
+          <div className="zoom-control">
+            <button 
+              className="zoom-button" 
+              onClick={() => setZoomLevel(Math.max(zoomLevel - 10, 0))}
+              disabled={zoomLevel <= 0}
+            >
+              <span>−</span>
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={zoomLevel}
+              onChange={(e) => setZoomLevel(Number(e.target.value))}
+              className="zoom-slider"
+            />
+            <button 
+              className="zoom-button" 
+              onClick={() => setZoomLevel(Math.min(zoomLevel + 10, 100))}
+              disabled={zoomLevel >= 100}
+            >
+              <span>+</span>
+            </button>
+            <button className="fullscreen-button" title="Toggle Fullscreen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 3H5C3.89543 3 3 3.89543 3 5V8M21 8V5C21 3.89543 20.1046 3 19 3H16M16 21H19C20.1046 21 21 20.1046 21 19V16M3 16V19C3 20.1046 3.89543 21 5 21H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
           </div>
-          <div className="display-options">
-            <label className="toggle-switch">
-              <input type="checkbox" />
-              <span className="toggle-slider"></span>
-            </label>
-          </div>
-          <button className="fullscreen-button">⛶</button>
         </div>
       </div>
-
-      <div className={`games-container ${viewMode}`}>
-        {filteredGames.map((game) => (
-          <div 
-            key={game.id} 
-            className="game-card" 
-            onClick={() => handleGameClick(game)}
-          >
-            <div className="game-cover" style={{ backgroundImage: `url(${game.coverImage})` }}>
-              {game.installed && (
-                <div className="game-info">
-                  <div className="install-status">Installed</div>
-                  <div className="playtime">{game.playTime}</div>
-                  <div className="completion-status">
-                    <div>Completion state</div>
-                    <div>{game.completionState}</div>
+      
+      <div 
+        className={`games-grid ${viewMode === 'list' ? 'list-view' : ''}`}
+        style={{
+          '--zoom-factor': `${0.5 + (zoomLevel / 100) * 1.5}`
+        } as React.CSSProperties}
+      >
+        {filteredGames.length > 0 ? (
+          filteredGames.map(game => (
+            <div key={game.id} className="game-card">
+              <div className="game-cover-wrapper">
+                <img 
+                  src={game.coverUrl} 
+                  alt={game.title}
+                  className="game-cover"
+                  onError={(e) => {
+                    // Fallback for broken images
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://via.placeholder.com/300x450?text=No+Cover';
+                  }}
+                />
+                {viewMode === 'grid' && (
+                  <div className="game-info-overlay">
+                    <div className="game-title">{game.title}</div>
+                    <div className="game-playtime">{game.playtime}</div>
+                    <div className="game-completion">{game.completion}</div>
                   </div>
-                  <div className="game-actions">
-                    <button 
-                      className="info-button"
-                      onClick={(e) => handleInfoClick(e, game)}
-                    >
-                      ℹ
-                    </button>
-                    <button 
-                      className="play-button"
-                      onClick={(e) => handlePlayClick(e, game)}
-                    >
-                      ▶
-                    </button>
+                )}
+              </div>
+              {viewMode === 'list' && (
+                <div className="game-details">
+                  <div className="game-title">{game.title}</div>
+                  <div className="game-meta">
+                    <span className="game-playtime">{game.playtime}</span>
+                    <span className="game-completion">{game.completion}</span>
                   </div>
                 </div>
               )}
             </div>
+          ))
+        ) : (
+          <div className="no-games-message">
+            No games found. Try adjusting your search.
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
