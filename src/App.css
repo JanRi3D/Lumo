@@ -49,6 +49,14 @@ body {
   height: 42px;
   color: var(--navbar-text);
   padding: 0 5px;
+  -webkit-app-region: drag; /* Make navbar draggable in Tauri */
+  app-region: drag; /* Standard version */
+}
+
+.navbar button,
+.app-logo {
+  -webkit-app-region: no-drag; /* Make buttons inside navbar non-draggable */
+  app-region: no-drag; /* Standard version */
 }
 
 .app-logo {

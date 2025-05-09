@@ -1,12 +1,27 @@
 import { useState } from "react";
 import "./App.css";
 import Library from "./components/Library";
+// Import Tauri window API
+import { appWindow } from "@tauri-apps/api/window";
 
 function App() {
   const [activeTab, setActiveTab] = useState("Library");
   const [igdbClientId, setIgdbClientId] = useState("");
   const [igdbClientSecret, setIgdbClientSecret] = useState("");
   
+  // Window control handlers
+  const handleMinimize = () => {
+    appWindow.minimize();
+  };
+  
+  const handleMaximize = () => {
+    appWindow.toggleMaximize();
+  };
+  
+  const handleClose = () => {
+    appWindow.close();
+  };
+
   const handleSaveApiKeys = () => {
     // Add logic to save API keys
     console.log("Saving API keys:", { igdbClientId, igdbClientSecret });
@@ -147,9 +162,9 @@ function App() {
               <path d="M21 3V8M21 8H16M21 8L18 5.29168C16.4077 3.86656 14.3051 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.2832 21 19.8675 18.008 20.777 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <button title="Minimize" className="window-control">−</button>
-          <button title="Maximize" className="window-control">□</button>
-          <button title="Close" className="window-control">×</button>
+          <button title="Minimize" className="window-control" onClick={handleMinimize}>−</button>
+          <button title="Maximize" className="window-control" onClick={handleMaximize}>□</button>
+          <button title="Close" className="window-control" onClick={handleClose}>×</button>
         </div>
       </div>
 
