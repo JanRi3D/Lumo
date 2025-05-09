@@ -1,5 +1,7 @@
 :root {
   --background-color: #f5f2ef;
+  --navbar-bg: #1e1e1e;
+  --navbar-text: #ffffff;
   --sidebar-color: #e8e4e1;
   --text-color: #333;
   --text-secondary: #777;
@@ -43,32 +45,52 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: var(--background-color);
-  height: 40px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background-color: var(--navbar-bg);
+  height: 42px;
+  color: var(--navbar-text);
+  padding: 0 5px;
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: var(--navbar-text);
+  height: 100%;
 }
 
 .navbar-tabs {
   display: flex;
-  padding-left: 15px;
+  flex: 1;
 }
 
 .navbar-tabs button {
   background: none;
   border: none;
-  color: var(--text-color);
+  color: var(--navbar-text);
+  opacity: 0.7;
   font-size: 14px;
   cursor: pointer;
   padding: 0 15px;
-  height: 40px;
+  height: 42px;
   position: relative;
   font-weight: normal;
   outline: none;
   box-shadow: none;
   border-radius: 0;
+  transition: opacity 0.2s;
+}
+
+.navbar-tabs button:hover {
+  opacity: 0.9;
 }
 
 .navbar-tabs button.active {
+  opacity: 1;
   font-weight: 500;
 }
 
@@ -85,16 +107,17 @@ body {
 .navbar-actions {
   display: flex;
   align-items: center;
-  height: 40px;
+  height: 42px;
 }
 
 .icon-button {
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: var(--navbar-text);
+  opacity: 0.7;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,23 +126,40 @@ body {
   box-shadow: none;
   border-radius: 0;
   padding: 0;
+  transition: opacity 0.2s;
+}
+
+.icon-button:hover {
+  opacity: 1;
 }
 
 .window-control {
   background: none;
   border: none;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
+  color: var(--navbar-text);
+  opacity: 0.7;
   font-size: 16px;
   outline: none;
   box-shadow: none;
   border-radius: 0;
   padding: 0;
+  transition: opacity 0.2s;
+}
+
+.window-control:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.window-control:last-child:hover {
+  background-color: #e81123;
+  opacity: 1;
 }
 
 .main-content {

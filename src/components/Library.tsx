@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../styles/LibraryView.css';
+import '../styles/Library.css';
 
 interface Game {
   id: string;
@@ -10,7 +10,7 @@ interface Game {
   completionState?: string;
 }
 
-const LibraryView = () => {
+const Library = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [games, setGames] = useState<Game[]>([
@@ -222,4 +222,4 @@ const LibraryView = () => {
   );
 };
 
-export default LibraryView;
+export default Library;
