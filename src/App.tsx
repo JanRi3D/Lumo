@@ -2,9 +2,10 @@ import { useState } from "react";
 import "./App.css";
 import Library from "./components/Library";
 import Settings from "./components/Settings";
+import Overview from "./components/Overview";
 
 function App() {
-  const [activeTab, setActiveTab] = useState("Library");
+  const [activeTab, setActiveTab] = useState("Overview");
   
   const renderContent = () => {
     switch(activeTab) {
@@ -13,6 +14,7 @@ function App() {
       case "Settings":
         return <Settings />;
       case "Overview":
+        return <Overview />;
       case "Screenshots":
       default:
         return <div className="placeholder-content">Content for {activeTab} will be implemented soon.</div>;
