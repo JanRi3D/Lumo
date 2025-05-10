@@ -4,6 +4,7 @@ import Library from "./components/Library";
 import Settings from "./components/Settings";
 import Overview from "./components/Overview";
 import Download from "./components/Download";
+import Screenshots from "./components/Screenshots";
 import { Window } from '@tauri-apps/api/window';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
       case "Downloads":
         return <Download />;
       case "Screenshots":
+        return <Screenshots />;
       default:
         return <div className="placeholder-content">Content for {activeTab} will be implemented soon.</div>;
     }

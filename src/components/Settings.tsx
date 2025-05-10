@@ -5,7 +5,19 @@ const Settings: React.FC = () => {
   const [activeSection, setActiveSection] = useState('API Keys');
   const [igdbClientId, setIgdbClientId] = useState("");
   const [igdbClientSecret, setIgdbClientSecret] = useState("");
+  const [autostartEnabled, setAutostartEnabled] = useState(false);
+  const [minimizeToTray, setMinimizeToTray] = useState(false);
+  const [startMinimized, setStartMinimized] = useState(false);
   
+  // Screenshot settings state
+  const [screenshotPath, setScreenshotPath] = useState("");
+  const [screenshotFormat, setScreenshotFormat] = useState("png");
+  const [screenshotQuality, setScreenshotQuality] = useState(90);
+  const [autoSaveScreenshots, setAutoSaveScreenshots] = useState(true);
+  const [screenshotHotkey, setScreenshotHotkey] = useState("F12");
+  const [includeTimestamp, setIncludeTimestamp] = useState(true);
+  const [screenshotNaming, setScreenshotNaming] = useState("game_timestamp");
+
   const handleSaveApiKeys = () => {
     // Add logic to save API keys
     console.log("Saving API keys:", { igdbClientId, igdbClientSecret });
@@ -14,6 +26,33 @@ const Settings: React.FC = () => {
   const handleTestCredentials = () => {
     // Add logic to test API credentials
     console.log("Testing credentials:", { igdbClientId, igdbClientSecret });
+  };
+
+  const handleSaveAutostartSettings = () => {
+    // Add logic to save autostart settings
+    console.log("Saving autostart settings:", { 
+      autostartEnabled, 
+      minimizeToTray, 
+      startMinimized 
+    });
+  };
+
+  const handleSaveScreenshotSettings = () => {
+    // Add logic to save screenshot settings
+    console.log("Saving screenshot settings:", {
+      screenshotPath,
+      screenshotFormat,
+      screenshotQuality,
+      autoSaveScreenshots,
+      screenshotHotkey,
+      includeTimestamp,
+      screenshotNaming
+    });
+  };
+
+  const handleBrowseScreenshotPath = () => {
+    // Add logic to open folder browser
+    console.log("Opening folder browser for screenshot path");
   };
 
   return (
@@ -203,11 +242,143 @@ const Settings: React.FC = () => {
         )}
 
         {activeSection === 'Screenshots' && (
-          <div className="settings-header">
-            <h1>Screenshots</h1>
-            <p>Configure screenshot capture settings and storage location.</p>
-            <div className="placeholder-content">Screenshot settings content will be implemented soon.</div>
-          </div>
+          <>
+            <div className="settings-header">
+              <h1>Screenshots</h1>
+              <p>Configure screenshot capture settings and storage location.</p>
+            </div>
+
+            <div className="form-section">
+              <div className="form-group">
+                <label>Screenshot Storage Location</label>
+                <div className="path-input-group">
+                  <input 
+                    type="text" 
+                    placeholder="Select folder for screenshots" 
+                    value={screenshotPath} 
+                    onChange={(e) => setScreenshotPath(e.target.value)} 
+                  />
+                  <button className="secondary-button" onClick={handleBrowseScreenshotPath}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M3 7L12 13L21 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span>Browse</span>
+                  </button>
+                </div>
+                <p className="field-help">Choose where your screenshots will be saved.</p>
+              </div>
+
+              <div className="form-group">
+                <label>Screenshot Format</label>
+                <select 
+                  value={screenshotFormat} 
+                  onChange={(e) => setScreenshotFormat(e.target.value)}
+                >
+                  <option value="png">PNG (Lossless)</option>
+                  <option value="jpg">JPG (Compressed)</option>
+                  <option value="webp">WebP (Modern)</option>
+                </select>
+                <p className="field-help">Select the file format for your screenshots.</p>
+              </div>
+
+              {screenshotFormat !== 'png' && (
+                <div className="form-group">
+                  <label>Image Quality</label>
+                  <div className="slider-group">
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="100" 
+                      value={screenshotQuality} 
+                      onChange={(e) => setScreenshotQuality(parseInt(e.target.value))} 
+                    />
+                    <span className="slider-value">{screenshotQuality}%</span>
+                  </div>
+                  <p className="field-help">Adjust the quality of compressed image formats.</p>
+                </div>
+              )}
+
+              <div className="form-group">
+                <div className="toggle-group">
+                  <label>Auto-save Screenshots</label>
+                  <div className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      id="autoSaveScreenshots"
+                      checked={autoSaveScreenshots}
+                      onChange={(e) => setAutoSaveScreenshots(e.target.checked)}
+                    />
+                    <label htmlFor="autoSaveScreenshots"></label>
+                  </div>
+                </div>
+                <p className="field-help">Automatically save screenshots when captured.</p>
+              </div>
+
+              <div className="form-group">
+                <label>Screenshot Hotkey</label>
+                <input 
+                  type="text" 
+                  value={screenshotHotkey} 
+                  onChange={(e) => setScreenshotHotkey(e.target.value)} 
+                  placeholder="Press a key combination"
+                />
+                <p className="field-help">Set the keyboard shortcut for taking screenshots.</p>
+              </div>
+
+              <div className="form-group">
+                <div className="toggle-group">
+                  <label>Include Timestamp</label>
+                  <div className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      id="includeTimestamp"
+                      checked={includeTimestamp}
+                      onChange={(e) => setIncludeTimestamp(e.target.checked)}
+                    />
+                    <label htmlFor="includeTimestamp"></label>
+                  </div>
+                </div>
+                <p className="field-help">Add timestamp to screenshot filenames.</p>
+              </div>
+
+              <div className="form-group">
+                <label>File Naming Pattern</label>
+                <select 
+                  value={screenshotNaming} 
+                  onChange={(e) => setScreenshotNaming(e.target.value)}
+                >
+                  <option value="game_timestamp">Game Name + Timestamp</option>
+                  <option value="timestamp_game">Timestamp + Game Name</option>
+                  <option value="game_only">Game Name Only</option>
+                  <option value="timestamp_only">Timestamp Only</option>
+                </select>
+                <p className="field-help">Choose how your screenshot files will be named.</p>
+              </div>
+
+              <div className="action-buttons">
+                <button className="primary-button" onClick={handleSaveScreenshotSettings}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16L21 8V19C21 20.1046 20.1046 21 19 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M17 21V13H7V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M7 3V8H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span>Save Settings</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="help-section">
+              <h3>About Screenshots</h3>
+              <p>Lumo allows you to capture and manage screenshots of your games. Screenshots are automatically organized by game and can be easily shared or exported.</p>
+              <p>Supported formats:</p>
+              <ul>
+                <li>PNG - Best for high-quality screenshots with transparency</li>
+                <li>JPG - Good for smaller file sizes with some quality loss</li>
+                <li>WebP - Modern format with excellent compression</li>
+              </ul>
+            </div>
+          </>
         )}
         
         {activeSection === 'Completion States' && (
@@ -235,11 +406,79 @@ const Settings: React.FC = () => {
         )}
         
         {activeSection === 'Application' && (
-          <div className="settings-header">
-            <h1>Application</h1>
-            <p>General application settings and preferences.</p>
-            <div className="placeholder-content">Application settings will be implemented soon.</div>
-          </div>
+          <>
+            <div className="settings-header">
+              <h1>Application</h1>
+              <p>General application settings and preferences.</p>
+            </div>
+
+            <div className="form-section">
+              <div className="form-group">
+                <div className="toggle-group">
+                  <label>Application Autostart</label>
+                  <div className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      id="autostart"
+                      checked={autostartEnabled}
+                      onChange={(e) => setAutostartEnabled(e.target.checked)}
+                    />
+                    <label htmlFor="autostart"></label>
+                  </div>
+                </div>
+                <p className="field-help">Automatically start Lumo when you log in to your computer.</p>
+              </div>
+
+              <div className="form-group">
+                <div className="toggle-group">
+                  <label>Minimize to System Tray</label>
+                  <div className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      id="minimizeToTray"
+                      checked={minimizeToTray}
+                      onChange={(e) => setMinimizeToTray(e.target.checked)}
+                    />
+                    <label htmlFor="minimizeToTray"></label>
+                  </div>
+                </div>
+                <p className="field-help">When minimized, Lumo will continue running in the system tray.</p>
+              </div>
+
+              <div className="form-group">
+                <div className="toggle-group">
+                  <label>Start Minimized</label>
+                  <div className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      id="startMinimized"
+                      checked={startMinimized}
+                      onChange={(e) => setStartMinimized(e.target.checked)}
+                    />
+                    <label htmlFor="startMinimized"></label>
+                  </div>
+                </div>
+                <p className="field-help">Start Lumo minimized to the system tray when launched.</p>
+              </div>
+
+              <div className="action-buttons">
+                <button className="primary-button" onClick={handleSaveAutostartSettings}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16L21 8V19C21 20.1046 20.1046 21 19 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M17 21V13H7V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M7 3V8H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span>Save Settings</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="help-section">
+              <h3>About Application Autostart</h3>
+              <p>When enabled, Lumo will automatically start when you log in to your computer. This is useful if you want to keep your game library and achievements synced in the background.</p>
+              <p>The application will be configured to start with minimal system impact, and you can always disable this feature later.</p>
+            </div>
+          </>
         )}
       </div>
     </div>
