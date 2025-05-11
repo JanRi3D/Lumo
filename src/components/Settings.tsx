@@ -5,6 +5,9 @@ const Settings: React.FC = () => {
   const [activeSection, setActiveSection] = useState('API Keys');
   const [igdbClientId, setIgdbClientId] = useState("");
   const [igdbClientSecret, setIgdbClientSecret] = useState("");
+  const [igdbEnabled, setIgdbEnabled] = useState(false);
+  const [torboxApiKey, setTorboxApiKey] = useState("");
+  const [torboxEnabled, setTorboxEnabled] = useState(false);
   const [autostartEnabled, setAutostartEnabled] = useState(false);
   const [minimizeToTray, setMinimizeToTray] = useState(false);
   const [startMinimized, setStartMinimized] = useState(false);
@@ -20,7 +23,7 @@ const Settings: React.FC = () => {
 
   const handleSaveApiKeys = () => {
     // Add logic to save API keys
-    console.log("Saving API keys:", { igdbClientId, igdbClientSecret });
+    console.log("Saving API keys:", { igdbClientId, igdbClientSecret, igdbEnabled, torboxApiKey, torboxEnabled });
   };
 
   const handleTestCredentials = () => {
@@ -171,26 +174,75 @@ const Settings: React.FC = () => {
 
             <div className="form-section">
               <div className="form-group">
-                <label>IGDB Client ID</label>
-                <input 
-                  type="text" 
-                  placeholder="Enter your IGDB Client ID" 
-                  value={igdbClientId} 
-                  onChange={(e) => setIgdbClientId(e.target.value)} 
-                />
-                <p className="field-help">The IGDB Client ID from your Twitch Developer account.</p>
+                <div className="toggle-group">
+                  <label>Enable IGDB Integration</label>
+                  <div className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      id="igdbEnabled"
+                      checked={igdbEnabled}
+                      onChange={(e) => setIgdbEnabled(e.target.checked)}
+                    />
+                    <label htmlFor="igdbEnabled"></label>
+                  </div>
+                </div>
+                <p className="field-help">Enable IGDB integration for game metadata and information.</p>
               </div>
 
+              {igdbEnabled && (
+                <>
+                  <div className="form-group">
+                    <label>IGDB Client ID</label>
+                    <input 
+                      type="text" 
+                      placeholder="Enter your IGDB Client ID" 
+                      value={igdbClientId} 
+                      onChange={(e) => setIgdbClientId(e.target.value)} 
+                    />
+                    <p className="field-help">The IGDB Client ID from your Twitch Developer account.</p>
+                  </div>
+
+                  <div className="form-group">
+                    <label>IGDB Client Secret</label>
+                    <input 
+                      type="password" 
+                      placeholder="Enter your IGDB Client Secret" 
+                      value={igdbClientSecret} 
+                      onChange={(e) => setIgdbClientSecret(e.target.value)} 
+                    />
+                    <p className="field-help">The IGDB Client Secret from your Twitch Developer account.</p>
+                  </div>
+                </>
+              )}
+
               <div className="form-group">
-                <label>IGDB Client Secret</label>
-                <input 
-                  type="password" 
-                  placeholder="Enter your IGDB Client Secret" 
-                  value={igdbClientSecret} 
-                  onChange={(e) => setIgdbClientSecret(e.target.value)} 
-                />
-                <p className="field-help">The IGDB Client Secret from your Twitch Developer account.</p>
+                <div className="toggle-group">
+                  <label>Enable TorBox Integration</label>
+                  <div className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      id="torboxEnabled"
+                      checked={torboxEnabled}
+                      onChange={(e) => setTorboxEnabled(e.target.checked)}
+                    />
+                    <label htmlFor="torboxEnabled"></label>
+                  </div>
+                </div>
+                <p className="field-help">Enable TorBox integration for enhanced functionality.</p>
               </div>
+
+              {torboxEnabled && (
+                <div className="form-group">
+                  <label>TorBox API Key</label>
+                  <input 
+                    type="password" 
+                    placeholder="Enter your TorBox API Key" 
+                    value={torboxApiKey} 
+                    onChange={(e) => setTorboxApiKey(e.target.value)} 
+                  />
+                  <p className="field-help">Your TorBox API key for accessing TorBox services.</p>
+                </div>
+              )}
 
               <div className="action-buttons">
                 <button className="primary-button" onClick={handleSaveApiKeys}>
